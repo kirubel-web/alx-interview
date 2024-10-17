@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """
-The operations you will perform will involve breaking down n into its prime factors and summing them up to get the number of operations.
+The operations you will perform will involve breaking down n
 """
+
 
 def minOperations(n):
     if n <= 1:
@@ -17,4 +18,3 @@ def minOperations(n):
         factor += 1
 
     return operations
-
