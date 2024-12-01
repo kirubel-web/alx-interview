@@ -9,16 +9,17 @@ def makeChange(coins, total):
         coins ([List]): [List of Coins available]
         total ([int]): [total amount needed]
     """
-   if total <= 0:
-        return 0 
-    if not coins:
-        return -1
+    if total <= 0:
+        return 0
+    check = 0
+    temp = 0
     coins.sort(reverse=True)
-    count = 0
-    for coin in coins:
-        count += total // coin
-        total = total % coin
-    if total != 0:
-        return -1
-    return count
-
+    for i in coins:
+        while check < total:
+            check += i
+            temp += 1
+        if check == total:
+            return temp
+        check -= i
+        temp -= 1
+    return -1
