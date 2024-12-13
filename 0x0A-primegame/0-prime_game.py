@@ -1,56 +1,40 @@
 #!/usr/bin/python3
+"""
+this module defines the function isWinner
+"""
 
 
-def is_prime(n):
-    """Check if a number is prime."""
-    if n < 2:
-        return False
-    for i in range(2, int(n ** 0.5) + 1):
-        if n % i == 0:
-            return False
-    return True
-
-
-def get_primes_up_to(n):
-    """Get list of primes up to n."""
-    primes = []
-    for i in range(2, n + 1):
-        if is_prime(i):
-            primes.append(i)
-    return primes
+def primeNumbers(n):
+    """this function return an array of prime numbers
+    smaller or equal to n using Sieve of Eratosthenes"""
+    result = []
+    prime = [True for i in range(n+1)]
+    p = 2
+    while (p * p <= n):
+        if (prime[p] is True):
+            for i in range(p * p, n+1, p):
+                prime[i] = False
+        p += 1
+    for p in range(2, n+1):
+        if prime[p]:
+            result.append(p)
+    return result
 
 
 def isWinner(x, nums):
-    """
-    Determine who wins the prime game more rounds.
-    Args:
-        x (int): number of rounds
-        nums (list): array of n for each round
-    Returns:
-        str: 'Maria' or 'Ben' or None
-    """
-    if not nums or x < 1:
+    """Who is the winner"""
+
+    if x != len(nums):
         return None
-    maria_wins = 0
-    ben_wins = 0
 
-    # For each round
-    for n in nums[:x]:
-        if n < 2:
-            ben_wins += 1
-            continue
-        # Get primes up to n
-        primes = get_primes_up_to(n)
+    Ben = 0
+    Maria = 0
 
-        # If number of primes is even, Ben wins
-        # If number of primes is odd, Maria wins
+    for num in nums:
+        primes = primeNumbers(num)
         if len(primes) % 2 == 0:
-            ben_wins += 1
+            Ben += 1
         else:
-            maria_wins += 1
+            Maria += 1
 
-    if maria_wins > ben_wins:
-        return "Maria"
-    elif ben_wins > maria_wins:
-        return "Ben"
-    return None
+    return "Ben" if Ben > Maria else "Maria"
